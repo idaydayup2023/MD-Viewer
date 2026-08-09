@@ -1,0 +1,7 @@
+* text=auto
+*.png binary
+
+# These are pinned upstream browser bundles. Keep GitHub language statistics and
+# review diffs focused on MD Viewer source code.
+MDViewer/Resources/Renderer/vendor/* linguist-vendored
+MDViewer/Resources/Renderer/vendor/*.js -diff

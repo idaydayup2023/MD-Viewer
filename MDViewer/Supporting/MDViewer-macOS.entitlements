@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<!-- Direct-distribution build: leaving App Sandbox disabled is intentional.
+     Finder grants a sandboxed viewer only the selected .md file, while
+     Markdown routinely references arbitrary sibling assets. The app performs
+     read-only coordinated access and never writes referenced resources. -->
+<dict/>
+</plist>

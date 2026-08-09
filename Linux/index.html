@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' file:; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' file: data:; frame-src 'self' file:">
+  <title>MD Viewer</title>
+  <link rel="stylesheet" href="app.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div id="app">
+    <header class="toolbar">
+      <button id="sidebar-button" class="icon-button" title="显示或隐藏目录" aria-label="显示或隐藏目录">☰</button>
+      <div class="document-title" id="document-title">MD Viewer</div>
+      <div class="toolbar-spacer"></div>
+      <button id="open-button" class="toolbar-button"><span aria-hidden="true">⌁</span> 打开</button>
+      <button id="reload-button" class="icon-button document-action" title="重新载入" aria-label="重新载入" hidden>↻</button>
+      <button id="print-button" class="icon-button document-action" title="打印" aria-label="打印" hidden>⎙</button>
+      <button id="source-button" class="toolbar-button document-action" hidden>源文</button>
+      <button id="settings-button" class="icon-button" title="阅读设置" aria-label="阅读设置">⚙</button>
+    </header>
+
+    <div class="workspace">
+      <aside id="sidebar">
+        <div class="sidebar-heading">目录</div>
+        <nav id="outline" aria-label="文档目录">
+          <div class="empty-outline">尚未打开文档</div>
+        </nav>
+        <div id="document-stats" class="document-stats" hidden>
+          <div><span id="word-count">0 字词</span><span id="file-size"></span></div>
+          <div><span id="math-count">0 个公式</span><span id="render-time">0 ms</span></div>
+        </div>
+      </aside>
+
+      <main>
+        <div id="search-bar" class="search-bar document-action" hidden>
+          <span aria-hidden="true">⌕</span>
+          <input id="search-input" type="search" placeholder="在文档中查找" autocomplete="off">
+          <span id="search-result" class="search-result"></span>
+        </div>
+
+        <section id="welcome" class="welcome">
+          <div class="welcome-icon" aria-hidden="true">▤</div>
+          <h1>MD Viewer</h1>
+          <p>忠实阅读 Markdown，完整呈现公式、代码、表格和图表。</p>
+          <div class="welcome-actions">
+            <button id="welcome-open" class="primary-button">打开文件…</button>
+            <button id="sample-button" class="secondary-button">查看功能示例</button>
+          </div>
+          <p class="drop-hint">支持麒麟 Linux · 完全离线渲染</p>
+        </section>
+
+        <section id="reader-area" class="reader-area" hidden>
+          <div class="reader-pane">
+            <iframe id="reader-frame" src="reader.html" title="Markdown 阅读视图"></iframe>
+          </div>
+          <pre id="source-pane" class="source-pane" hidden><code id="source-content"></code></pre>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <dialog id="settings-dialog">
+    <form method="dialog">
+      <div class="dialog-title">
+        <strong>阅读设置</strong>
+        <button class="icon-button" value="cancel" aria-label="关闭">×</button>
+      </div>
+
+      <label class="setting-row">
+        <span>外观</span>
+        <select id="appearance">
+          <option value="system">跟随系统</option>
+          <option value="light">浅色</option>
+          <option value="dark">深色</option>
+        </select>
+      </label>
+
+      <label class="setting-block">
+        <span>正文宽度：<output id="width-output">860 px</output></span>
+        <input id="content-width" type="range" min="560" max="1200" step="20" value="860">
+      </label>
+
+      <label class="setting-block">
+        <span>字号：<output id="font-output">100%</output></span>
+        <input id="font-scale" type="range" min="0.8" max="1.5" step="0.05" value="1">
+      </label>
+
+      <label class="setting-check">
+        <input id="raw-html" type="checkbox">
+        <span>允许原始 HTML</span>
+      </label>
+      <p class="setting-note">关闭时会把文档内的 HTML 当作文本处理，避免未知文档嵌入内容。</p>
+    </form>
+  </dialog>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

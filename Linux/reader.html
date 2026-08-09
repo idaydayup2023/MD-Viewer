@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-Hans" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' file: data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' file: data:; font-src 'self' data:; worker-src 'none'; connect-src 'none'">
+  <base id="document-base" href="./">
+  <link rel="stylesheet" href="../MDViewer/Resources/Renderer/style.css">
+  <link rel="stylesheet" href="../MDViewer/Resources/Renderer/vendor/highlight-light.css">
+  <style>
+    :root[data-theme="dark"] .hljs { color: #c9d1d9; background: #0d1117; }
+  </style>
+  <script>
+    window.webkit = {
+      messageHandlers: {
+        bridge: {
+          postMessage(payload) {
+            window.parent.postMessage({ channel: "mdviewer-renderer", payload }, "*");
+          }
+        }
+      }
+    };
+  </script>
+  <script src="../MDViewer/Resources/Renderer/vendor/markdown-it.min.js"></script>
+  <script src="../MDViewer/Resources/Renderer/vendor/markdown-it-footnote.min.js"></script>
+  <script src="../MDViewer/Resources/Renderer/vendor/markdown-it-task-lists.min.js"></script>
+  <script src="../MDViewer/Resources/Renderer/vendor/markdown-it-mark.min.js"></script>
+  <script src="../MDViewer/Resources/Renderer/vendor/markdown-it-sub.min.js"></script>
+  <script src="../MDViewer/Resources/Renderer/vendor/markdown-it-sup.min.js"></script>
+  <script src="../MDViewer/Resources/Renderer/vendor/highlight.min.js"></script>
+  <script src="../MDViewer/Resources/Renderer/vendor/mermaid.min.js"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [["\\(", "\\)"]],
+        displayMath: [["\\[", "\\]"]],
+        processEscapes: true,
+        processEnvironments: true,
+        tags: "ams"
+      },
+      svg: { fontCache: "local" },
+      options: {
+        enableMenu: true,
+        enableSpeech: false,
+        enableBraille: false,
+        enableExplorer: false,
+        menuOptions: { settings: { enrich: false } },
+        skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      },
+      startup: { typeset: false }
+    };
+  </script>
+  <script src="../MDViewer/Resources/Renderer/vendor/mathjax-tex-mml-svg.js"></script>
+</head>
+<body>
+  <article id="content" aria-live="polite"></article>
+  <script src="../MDViewer/Resources/Renderer/renderer.js"></script>
+  <script src="reader-bridge.js"></script>
+</body>
+</html>

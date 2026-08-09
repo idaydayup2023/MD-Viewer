@@ -1,0 +1,84 @@
+{
+  "name": "md-viewer",
+  "private": true,
+  "version": "1.1.1",
+  "license": "MIT",
+  "author": {
+    "name": "MD Viewer"
+  },
+  "homepage": "https://github.com/idaydayup2023/MD-Viewer",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/idaydayup2023/MD-Viewer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/idaydayup2023/MD-Viewer/issues"
+  },
+  "desktopName": "md-viewer",
+  "description": "面向 macOS、iOS 与麒麟 Linux、支持一致打印的离线 Markdown 阅读器",
+  "main": "Linux/main.js",
+  "scripts": {
+    "vendor:mermaid": "sh scripts/rebuild-mermaid-vendor.sh",
+    "linux:dev": "electron Linux/main.js",
+    "linux:dist": "electron-builder --linux AppImage deb --x64",
+    "linux:dist:x64": "electron-builder --linux AppImage deb --x64",
+    "test:print": "electron scripts/verify-print.js"
+  },
+  "devDependencies": {
+    "@highlightjs/cdn-assets": "11.11.1",
+    "dompurify": "3.4.13",
+    "electron": "43.2.0",
+    "electron-builder": "26.15.3",
+    "highlight.js": "11.11.1",
+    "markdown-it": "14.3.0",
+    "markdown-it-footnote": "4.0.0",
+    "markdown-it-mark": "4.0.0",
+    "markdown-it-sub": "2.0.0",
+    "markdown-it-sup": "2.0.0",
+    "markdown-it-task-lists": "2.1.1",
+    "mathjax-full": "3.2.2",
+    "mermaid": "11.16.1"
+  },
+  "build": {
+    "appId": "com.daibo.mdviewer",
+    "productName": "MD Viewer",
+    "artifactName": "MD-Viewer-${version}-${arch}.${ext}",
+    "asar": true,
+    "directories": {
+      "output": "Build/Linux"
+    },
+    "files": [
+      "Linux/**/*",
+      "MDViewer/Resources/FeatureShowcase.md",
+      "MDViewer/Resources/Renderer/**/*",
+      "package.json"
+    ],
+    "linux": {
+      "executableName": "md-viewer",
+      "category": "Office",
+      "icon": "Linux/assets/icon.png",
+      "syncDesktopName": true,
+      "maintainer": "MD Viewer",
+      "synopsis": "离线 Markdown、数学公式与图表阅读器",
+      "description": "面向麒麟 Linux 的离线 Markdown 阅读器，支持 CommonMark、GFM、MathJax 公式、Mermaid 图表、代码高亮、目录、查找和源文对照。",
+      "mimeTypes": [
+        "text/markdown",
+        "text/plain"
+      ],
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    }
+  }
+}

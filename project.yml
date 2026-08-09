@@ -1,0 +1,119 @@
+name: MDViewer
+options:
+  bundleIdPrefix: com.daibo
+  deploymentTarget:
+    iOS: "17.0"
+    macOS: "14.0"
+  xcodeVersion: "26.0"
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    CURRENT_PROJECT_VERSION: 5
+    MARKETING_VERSION: "1.1.1"
+    CODE_SIGN_STYLE: Automatic
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: YES
+targets:
+  MDViewer-macOS:
+    type: application
+    platform: macOS
+    sources:
+      - path: MDViewer
+    resources:
+      - path: MDViewer/Resources
+    info:
+      path: MDViewer/Supporting/Info-macOS.plist
+      properties:
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        CFBundleIconFile: AppIcon
+        CFBundleIconName: AppIcon
+        CFBundleDocumentTypes:
+          - CFBundleTypeName: Markdown 文档
+            CFBundleTypeRole: Viewer
+            CFBundleTypeExtensions:
+              - md
+              - markdown
+              - mdown
+              - mkd
+            CFBundleTypeMIMETypes:
+              - text/markdown
+              - text/x-markdown
+            LSHandlerRank: Alternate
+            LSItemContentTypes:
+              - net.daringfireball.markdown
+          - CFBundleTypeName: 纯文本文档
+            CFBundleTypeRole: Viewer
+            CFBundleTypeExtensions:
+              - txt
+            LSHandlerRank: Alternate
+            LSItemContentTypes:
+              - public.plain-text
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.daibo.MDViewer
+        PRODUCT_NAME: MD Viewer
+        GENERATE_INFOPLIST_FILE: NO
+        CODE_SIGN_ENTITLEMENTS: MDViewer/Supporting/MDViewer-macOS.entitlements
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+      configs:
+        Debug:
+          PRODUCT_BUNDLE_IDENTIFIER: com.daibo.MDViewer.Development
+          INFOPLIST_FILE: MDViewer/Supporting/Info-macOS-Debug.plist
+    scheme:
+      testTargets:
+        - MDViewerTests
+  MDViewer-iOS:
+    type: application
+    platform: iOS
+    sources:
+      - path: MDViewer
+    resources:
+      - path: MDViewer/Resources
+    info:
+      path: MDViewer/Supporting/Info-iOS.plist
+      properties:
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        CFBundleDocumentTypes:
+          - CFBundleTypeName: Markdown 文档
+            CFBundleTypeRole: Viewer
+            LSHandlerRank: Alternate
+            LSItemContentTypes:
+              - net.daringfireball.markdown
+              - public.plain-text
+        LSSupportsOpeningDocumentsInPlace: true
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.daibo.MDViewer
+        PRODUCT_NAME: MD Viewer
+        GENERATE_INFOPLIST_FILE: NO
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SUPPORTS_MACCATALYST: NO
+    scheme:
+      testTargets:
+        - MDViewerTests
+  MDViewerTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: MDViewerTests
+    dependencies:
+      - target: MDViewer-macOS
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.daibo.MDViewerTests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/MD Viewer.app/Contents/MacOS/MD Viewer"
+        BUNDLE_LOADER: "$(TEST_HOST)"
