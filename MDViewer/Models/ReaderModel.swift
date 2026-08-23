@@ -44,21 +44,28 @@ final class ReaderModel: ObservableObject {
     }
 
     func open(_ url: URL) {
-        stopAccessingCurrentDocument()
-        beginAccessing(url)
+        let documentURL = url.standardizedFileURL
+        var candidateScopedURLs: [URL] = []
+        beginAccessing(documentURL, storingIn: &candidateScopedURLs)
         // A Markdown document commonly owns sibling images. Finder/open-panel
         // grants can include the containing folder; retain that scope when
         // available so WebKit can resolve relative resources from the base URL.
-        beginAccessing(url.deletingLastPathComponent())
+        beginAccessing(
+            documentURL.deletingLastPathComponent(),
+            storingIn: &candidateScopedURLs
+        )
 
         do {
-            markdown = try TextFileDecoder.decode(contentsOf: url)
-            fileURL = url.standardizedFileURL
+            let decodedMarkdown = try TextFileDecoder.decode(contentsOf: documentURL)
+            stopAccessingCurrentDocument()
+            scopedURLs = candidateScopedURLs
+            markdown = decodedMarkdown
+            fileURL = documentURL
             errorMessage = nil
             renderGeneration += 1
         } catch {
-            stopAccessingCurrentDocument()
-            errorMessage = "无法读取“\(url.lastPathComponent)”：\(error.localizedDescription)"
+            stopAccessing(candidateScopedURLs)
+            errorMessage = "无法读取“\(documentURL.lastPathComponent)”：\(error.localizedDescription)"
         }
     }
 
@@ -128,15 +135,19 @@ final class ReaderModel: ObservableObject {
         )
     }
 
-    private func beginAccessing(_ url: URL) {
+    private func beginAccessing(_ url: URL, storingIn urls: inout [URL]) {
         if url.startAccessingSecurityScopedResource() {
-            scopedURLs.append(url)
+            urls.append(url)
         }
     }
 
     private func stopAccessingCurrentDocument() {
-        scopedURLs.forEach { $0.stopAccessingSecurityScopedResource() }
+        stopAccessing(scopedURLs)
         scopedURLs.removeAll()
+    }
+
+    private func stopAccessing(_ urls: [URL]) {
+        urls.forEach { $0.stopAccessingSecurityScopedResource() }
     }
 }
 

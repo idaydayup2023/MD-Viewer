@@ -68,7 +68,7 @@ final class TextFileDecoderTests: XCTestCase {
     }
 
     @MainActor
-    func testStandaloneReopenResetsToWelcome() throws {
+    func testDockReopenWithVisibleWindowPreservesCurrentDocument() throws {
         let directory = FileManager.default.temporaryDirectory
             .appendingPathComponent(UUID().uuidString, isDirectory: true)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
@@ -90,11 +90,57 @@ final class TextFileDecoderTests: XCTestCase {
                 hasVisibleWindows: true
             )
         )
-        XCTAssertNil(model.fileURL)
-        XCTAssertEqual(model.markdown, "")
-        XCTAssertEqual(model.headings, [])
-        XCTAssertEqual(model.searchText, "")
-        XCTAssertFalse(model.isSourceVisible)
+        XCTAssertEqual(model.fileURL, url.standardizedFileURL)
+        XCTAssertEqual(model.markdown, "# Previous")
+        XCTAssertEqual(model.searchText, "Previous")
+        XCTAssertTrue(model.isSourceVisible)
+    }
+
+    @MainActor
+    func testDockReopenAfterWindowClosesPreservesCurrentDocument() throws {
+        let directory = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString, isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+
+        let url = directory.appendingPathComponent("Still Open.md")
+        try Data("# Still Open".utf8).write(to: url)
+
+        let model = ReaderModel()
+        model.open(url)
+        let delegate = MacApplicationDelegate()
+        delegate.attach(to: model)
+
+        XCTAssertTrue(
+            delegate.applicationShouldHandleReopen(
+                NSApplication.shared,
+                hasVisibleWindows: false
+            )
+        )
+        XCTAssertEqual(model.fileURL, url.standardizedFileURL)
+        XCTAssertEqual(model.markdown, "# Still Open")
+    }
+
+    @MainActor
+    func testFailedOpenPreservesCurrentDocument() throws {
+        let directory = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString, isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+
+        let currentURL = directory.appendingPathComponent("Current.md")
+        try Data("# Current".utf8).write(to: currentURL)
+        let missingURL = directory.appendingPathComponent("Missing.md")
+
+        let model = ReaderModel()
+        model.open(currentURL)
+        let generation = model.renderGeneration
+        model.open(missingURL)
+
+        XCTAssertEqual(model.fileURL, currentURL.standardizedFileURL)
+        XCTAssertEqual(model.markdown, "# Current")
+        XCTAssertEqual(model.renderGeneration, generation)
+        XCTAssertNotNil(model.errorMessage)
     }
 
     @MainActor

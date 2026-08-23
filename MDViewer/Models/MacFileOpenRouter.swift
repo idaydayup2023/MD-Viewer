@@ -12,7 +12,6 @@ final class MacApplicationDelegate: NSObject, NSApplicationDelegate {
     private weak var model: ReaderModel?
     private var pendingURLs: [URL] = []
     private var recentDeliveries: [URL: Date] = [:]
-    private var lastDocumentOpenRequestAt: Date?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Set the running application's icon explicitly. Finder can read the
@@ -47,16 +46,9 @@ final class MacApplicationDelegate: NSObject, NSApplicationDelegate {
         _ sender: NSApplication,
         hasVisibleWindows flag: Bool
     ) -> Bool {
-        let followsDocumentOpen = lastDocumentOpenRequestAt.map {
-            Date().timeIntervalSince($0) < 1
-        } ?? false
-
-        // Opening the application itself is a request for a fresh reader.
-        // Finder document-open events are delivered through accept(_:); keep
-        // their queued/current document even if AppKit also emits a reopen.
-        if pendingURLs.isEmpty, !followsDocumentOpen {
-            model?.resetToWelcome()
-        }
+        // Reopening from Dock is a presentation event, not a document-close
+        // request. SwiftUI restores or creates the window; the reader model
+        // keeps the current document while the application remains running.
         return true
     }
 
@@ -78,7 +70,6 @@ final class MacApplicationDelegate: NSObject, NSApplicationDelegate {
             .map { $0.standardizedFileURL }
 
         guard !documents.isEmpty else { return }
-        lastDocumentOpenRequestAt = Date()
         if model == nil {
             pendingURLs.append(contentsOf: documents)
         } else {
