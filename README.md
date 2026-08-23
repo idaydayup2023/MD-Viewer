@@ -1,6 +1,6 @@
 # MD Viewer
 
-MD Viewer 是一个面向 macOS、iOS/iPadOS 与麒麟 Linux 的离线 Markdown 阅读器。它把 Markdown 原文当作不可变的事实来源，在渲染前保护公式，再分别交给 CommonMark/GFM、MathJax、highlight.js 与 Mermaid 处理。
+MD Viewer 是一个面向 macOS、iOS/iPadOS、Windows 与麒麟 Linux 的离线 Markdown 阅读器。它把 Markdown 原文当作不可变的事实来源，在渲染前保护公式，再分别交给 CommonMark/GFM、MathJax、highlight.js 与 Mermaid 处理。
 
 ## 已实现
 
@@ -64,6 +64,15 @@ sudo apt install ./MD-Viewer-1.1.3-amd64.deb
 
 安装后可从应用菜单启动，也可以用 `md-viewer 文件.md` 打开文档。详细说明见 `Linux/README.md`。
 
+## Windows 运行
+
+Windows 版本支持 Windows 10/11 x64，提供标准安装版和免安装版：
+
+- `MD-Viewer-1.1.3-Windows-x64-Setup.exe`
+- `MD-Viewer-1.1.3-Windows-x64-Portable.exe`
+
+安装版会创建开始菜单入口，并注册 Markdown 与纯文本文件关联。免安装版可直接运行，不修改系统安装目录。详细说明见 `Windows/README.md`。
+
 ## 设计原则
 
 Markdown 不是单一格式，而是一族“基础规范 + 方言 + 渲染扩展”。本项目的兼容顺序是：
@@ -80,7 +89,7 @@ Markdown 不是单一格式，而是一族“基础规范 + 方言 + 渲染扩�
 
 已核验的正式包按版本保存在 `Release` 目录。每个版本都附有发布说明与 `SHA256SUMS.txt`；下载后可运行 `shasum -a 256 -c SHA256SUMS.txt` 校验完整性。
 
-公开 Release 仅提供 macOS 通用包和麒麟 Linux x86_64/amd64 包。iOS/iPadOS 保留源码兼容与内部编译验证，不提供公开下载产物。
+公开 Release 提供 macOS 通用包、Windows x64 安装包与免安装包，以及麒麟 Linux x86_64/amd64 包。iOS/iPadOS 保留源码兼容与内部编译验证，不提供公开下载产物。
 
 ## 许可证
 

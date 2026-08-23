@@ -15,13 +15,15 @@
     "url": "https://github.com/idaydayup2023/MD-Viewer/issues"
   },
   "desktopName": "md-viewer",
-  "description": "面向 macOS、iOS 与麒麟 Linux、支持一致打印的离线 Markdown 阅读器",
+  "description": "面向 macOS、iOS、Windows 与麒麟 Linux、支持一致打印的离线 Markdown 阅读器",
   "main": "Linux/main.js",
   "scripts": {
     "vendor:mermaid": "sh scripts/rebuild-mermaid-vendor.sh",
     "linux:dev": "electron Linux/main.js",
     "linux:dist": "electron-builder --linux AppImage deb --x64",
     "linux:dist:x64": "electron-builder --linux AppImage deb --x64",
+    "win:dev": "electron Linux/main.js",
+    "win:dist": "electron-builder --win nsis portable --x64 --config.directories.output=Build/Windows",
     "test:print": "electron scripts/verify-print.js"
   },
   "devDependencies": {
@@ -53,6 +55,25 @@
       "MDViewer/Resources/Renderer/**/*",
       "package.json"
     ],
+    "fileAssociations": [
+      {
+        "ext": [
+          "md",
+          "markdown",
+          "mdown",
+          "mkd"
+        ],
+        "name": "Markdown 文档",
+        "description": "Markdown 文档",
+        "role": "Viewer"
+      },
+      {
+        "ext": "txt",
+        "name": "纯文本文档",
+        "description": "纯文本文档",
+        "role": "Viewer"
+      }
+    ],
     "linux": {
       "executableName": "md-viewer",
       "category": "Office",
@@ -79,6 +100,35 @@
           ]
         }
       ]
+    },
+    "win": {
+      "executableName": "md-viewer",
+      "icon": "Linux/assets/icon.png",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "artifactName": "MD-Viewer-${version}-Windows-${arch}-Setup.${ext}",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "MD Viewer"
+    },
+    "portable": {
+      "artifactName": "MD-Viewer-${version}-Windows-${arch}-Portable.${ext}"
     }
   }
 }

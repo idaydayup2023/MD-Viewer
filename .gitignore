@@ -18,3 +18,5 @@ Release/**/*.app/
 Release/**/*.zip
 Release/**/*.AppImage
 Release/**/*.deb
+Release/**/*.exe
+Release/**/*.blockmap

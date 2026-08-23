@@ -1,3 +1,5 @@
 f131d44a9887e13e0e1583b271fcedfebd144f71a35fa3b2df13fceb062a0ba1  MD-Viewer-1.1.3-macOS-universal.zip
+339b628d45d208d13ceaad3c0295ac29dc890e29355b484c76c69b915a1ddff5  MD-Viewer-1.1.3-Windows-x64-Setup.exe
+11bab86f71899cbfd129e13d69e542e58c9923c63d2bbfdf0cb4e51fa2278a9e  MD-Viewer-1.1.3-Windows-x64-Portable.exe
 1daa75e6bba21b7ba31e8d5ad54d330f90767874fe7234c7c0f9a5184159d46e  MD-Viewer-1.1.3-x86_64.AppImage
 4cd03012269a08ebc6bc0bac8773779b4e7662375e82a088da779683aad75a8f  MD-Viewer-1.1.3-amd64.deb
