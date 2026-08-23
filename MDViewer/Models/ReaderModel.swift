@@ -80,7 +80,7 @@ final class ReaderModel: ObservableObject {
         }
     }
 
-    func resetToWelcome() {
+    func closeDocument() {
         stopAccessingCurrentDocument()
         fileURL = nil
         markdown = ""

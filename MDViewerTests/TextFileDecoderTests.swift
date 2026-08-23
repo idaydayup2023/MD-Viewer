@@ -97,7 +97,7 @@ final class TextFileDecoderTests: XCTestCase {
     }
 
     @MainActor
-    func testDockReopenAfterWindowClosesPreservesCurrentDocument() throws {
+    func testDockReopenAfterWindowClosesShowsWelcome() throws {
         let directory = FileManager.default.temporaryDirectory
             .appendingPathComponent(UUID().uuidString, isDirectory: true)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
@@ -110,6 +110,7 @@ final class TextFileDecoderTests: XCTestCase {
         model.open(url)
         let delegate = MacApplicationDelegate()
         delegate.attach(to: model)
+        model.closeDocument()
 
         XCTAssertTrue(
             delegate.applicationShouldHandleReopen(
@@ -117,8 +118,9 @@ final class TextFileDecoderTests: XCTestCase {
                 hasVisibleWindows: false
             )
         )
-        XCTAssertEqual(model.fileURL, url.standardizedFileURL)
-        XCTAssertEqual(model.markdown, "# Still Open")
+        XCTAssertNil(model.fileURL)
+        XCTAssertEqual(model.markdown, "")
+        XCTAssertEqual(model.headings, [])
     }
 
     @MainActor

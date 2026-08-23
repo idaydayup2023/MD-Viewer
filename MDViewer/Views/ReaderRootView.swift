@@ -76,6 +76,14 @@ struct ReaderRootView: View {
                 }
             }
         }
+        #if os(macOS)
+        // The red window close button closes both the reader window and its
+        // document. Hiding or minimizing the window does not remove this view,
+        // so those presentation actions continue to preserve the document.
+        .onDisappear {
+            model.closeDocument()
+        }
+        #endif
     }
 
     private var errorBinding: Binding<Bool> {
