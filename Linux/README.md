@@ -14,27 +14,27 @@ uname -m
 
 | AppImage | Debian 安装包 |
 | --- | --- |
-| `MD-Viewer-1.1.1-x86_64.AppImage` | `MD-Viewer-1.1.1-amd64.deb` |
+| `MD-Viewer-1.1.2-x86_64.AppImage` | `MD-Viewer-1.1.2-amd64.deb` |
 
 ARM64/aarch64、龙芯 LoongArch、申威等其他架构不在当前发布范围内，不应使用上述安装包。
 
 ## AppImage
 
 ```bash
-chmod +x MD-Viewer-1.1.1-x86_64.AppImage
-./MD-Viewer-1.1.1-x86_64.AppImage
+chmod +x MD-Viewer-1.1.2-x86_64.AppImage
+./MD-Viewer-1.1.2-x86_64.AppImage
 ```
 
 如果系统缺少 FUSE：
 
 ```bash
-./MD-Viewer-1.1.1-x86_64.AppImage --appimage-extract-and-run
+./MD-Viewer-1.1.2-x86_64.AppImage --appimage-extract-and-run
 ```
 
 ## Debian 安装包
 
 ```bash
-sudo apt install ./MD-Viewer-1.1.1-amd64.deb
+sudo apt install ./MD-Viewer-1.1.2-amd64.deb
 ```
 
 卸载：

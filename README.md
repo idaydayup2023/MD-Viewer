@@ -46,20 +46,20 @@ ARM64/aarch64 及其他处理器架构不在当前发布范围内。
 AppImage 免安装运行：
 
 ```bash
-chmod +x MD-Viewer-1.1.1-x86_64.AppImage
-./MD-Viewer-1.1.1-x86_64.AppImage
+chmod +x MD-Viewer-1.1.2-x86_64.AppImage
+./MD-Viewer-1.1.2-x86_64.AppImage
 ```
 
 如果系统没有启用 FUSE：
 
 ```bash
-./MD-Viewer-1.1.1-x86_64.AppImage --appimage-extract-and-run
+./MD-Viewer-1.1.2-x86_64.AppImage --appimage-extract-and-run
 ```
 
 安装 `.deb`：
 
 ```bash
-sudo apt install ./MD-Viewer-1.1.1-amd64.deb
+sudo apt install ./MD-Viewer-1.1.2-amd64.deb
 ```
 
 安装后可从应用菜单启动，也可以用 `md-viewer 文件.md` 打开文档。详细说明见 `Linux/README.md`。

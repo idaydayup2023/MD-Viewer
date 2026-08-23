@@ -1,0 +1,3 @@
+ff3d6b2eb467b244f53dfcf1ecef1e541e9be03b8ba1767ba0678a334bfcd50e  MD-Viewer-1.1.2-macOS-universal.zip
+b50b9283854d17e3371cd473e4b24bd0265fdbc7738adf215a5a9a79a0d84cec  MD-Viewer-1.1.2-x86_64.AppImage
+d709f1f537d779f56312c43ec91413d20d698bedf3832a945a819e0511f9987d  MD-Viewer-1.1.2-amd64.deb
