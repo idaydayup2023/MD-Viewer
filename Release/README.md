@@ -3,7 +3,7 @@
 每个版本使用独立子目录，包含平台安装包、发布说明与 SHA-256 校验文件。
 
 - macOS：通用架构压缩包，解压后将 `MD Viewer.app` 放入“应用程序”。
-- Windows：支持 x64，提供 NSIS 标准安装包和免安装包。
+- Windows：1.1.3 为最后一个公开版本，保留 x64 NSIS 标准安装包和免安装包；后续版本不再编译或提供。
 - 麒麟 Linux：仅支持 x86_64（Debian 架构名 `amd64`），不提供 ARM64。
 
 iOS/iPadOS 仅保留源码兼容与内部编译验证，不放入公开 Release，也不提供 Simulator、IPA、App Store 或 TestFlight 下载包。
